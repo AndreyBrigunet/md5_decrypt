@@ -8,32 +8,37 @@ define('INC_DIR', DIR . 'inc' . DIRECTORY_SEPARATOR);
 
 require_once DIR . 'functions.php';
 
-$time_start = microtime(true);
+$options = getopt("r:");
 
-$hash = file('hash.md5', FILE_IGNORE_NEW_LINES);
-$chars = str_split("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!#$%&'()*+,-./:;<=>?@[\]^_`{|}~");
-// $chars = str_split("0123456789");
-$repeat = 8;
-
-$generator = genCombinations($chars, $repeat);
-
-foreach ($generator as $key => $str) {
-	// Do something with the value here
-	// pr($value);
-	$key = md5($str);
-
-	echo $str;
-	echo " - ";
-	echo $key;
-	echo "\n";
+if(isset($options['r'])){	
 	
-	if (in_array($key, $hash) ) {
-		@file_get_contents('https://tg.brigu.net/api/decrypt/' .$str. '/' .$key );
+	$hash = file('hash.md5', FILE_IGNORE_NEW_LINES);
+	$chars = str_split("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!#$%&'()*+,-./:;<=>?@[\]^_`{|}~");
+	// $chars = str_split("0123456789");
+	$repeat = $options['r'];
+	
+	$generator = genCombinations($chars, $repeat);
+	
+	foreach ($generator as $key => $str) {
+		// Do something with the value here
+		// pr($value);
+		$key = md5($str);
+		
+		echo $str;
+		echo " - ";
+		echo $key;
+		echo "\n";
+		
+		if (in_array($key, $hash) ) {
+			@file_get_contents('https://tg.brigu.net/api/decrypt/' .$str. '/' .$key );
+		}
+		
 	}
 	
+	
+} else {
+	echo "Adauga index.php -r=6";
 }
-
-
 
 	
 		
