@@ -4,9 +4,9 @@ class myGenerator {
     protected $generator = null;
     protected $max_elements = 0;
 
-    // public $chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!#$%&'()*+,-./:;<=>?@[\]^_`{|}~";
+    public $chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!#$%&'()*+,-./:;<=>?@[\]^_`{|}~";
 	// public $chars = "0123456789";
-	public $chars = "abcd";
+	// public $chars = "abcd";
 
     function __construct($data) {
 

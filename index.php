@@ -15,10 +15,10 @@ $options = getopt("r:");
 if(isset($options['r'])){	
 	
 	function index($hash, $repeat, $status, $i) {
-		$step = 10;
+		$step = 10000000;
 		$stop = $step * $i;
 		$start = $stop - $step;
-
+		$time_start = microtime(true);
 		$data = [
 			"repeat" => $repeat,
 			"start" => $start,
@@ -27,15 +27,17 @@ if(isset($options['r'])){
 
 		$g = new myGenerator($data);
 		$generator = $g->generator();
+		// echo $g->maxElements()."\n";
+		// exit(2);
 		
 		foreach ($generator as $key => $str) {
 			// Do something with the value here
 			$md5 = md5($str);
 			
-			echo $str;
+			// echo $str;
 			// echo " - ";
 			// echo $key;
-			echo "\n";
+			// echo "\n";
 			
 			if (in_array($md5, $hash) ) {
 				sleep(3);
@@ -45,6 +47,10 @@ if(isset($options['r'])){
 			// sleep(1);
 		}
 
+		$time_end = microtime(true);
+		$time = ($time_end - $time_start)/60;;
+		echo "Process Time: {$time} min \n";
+		
 		if($stop < $g->maxElements()){
 			exit($status);
 		} else {
@@ -54,7 +60,7 @@ if(isset($options['r'])){
 
 	$hash = file('hash.md5', FILE_IGNORE_NEW_LINES);
 	$repeat = $options['r'];
-	$th = 2;
+	$th = 22;
 	$index = 1;
 
 	function startThread($hash, $repeat) {
@@ -62,7 +68,7 @@ if(isset($options['r'])){
 
 		$thread = new Thread('index');
 		$thread->start($hash, $repeat, 1, $index);
-		echo $index . "\n";
+		// echo $index . "\n";
 		$index++;
 		return $thread;
 	}
