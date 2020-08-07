@@ -29,14 +29,30 @@ function set_status($id) {
 
     return false;
 }
-function genCombinations($values,$count=0) {
-	// Figure out how many combinations are possible:
-	$permCount = pow(count($values),$count);
+
+function initCombinations($data) {
+
+    $chars = $data['chars'];
+    $repeat = $data['repeat'];
+    $start = $data['start'];
+    $stop = $data['stop'];
+
+    $permCount = pow(count($chars), $repeat);
+    
+    $generator = genCombinations($chars, $repeat, $stop, $start);
+
+    return (object)[
+        "generator" => $generator,
+        "permCount" => $permCount,
+    ];
+}
+
+function genCombinations($values, $count, $stop, $start = 0) {
 
 	// Iterate and yield:
-	for($i = 0; $i < $permCount; $i++){
-		yield getCombination($values, $count, $i);
-	}
+	for($i = $start; $i < $stop; $i++){
+        yield getCombination($values, $count, $i);
+    }
 }
 
 // State-based way of generating combinations:
