@@ -41,7 +41,7 @@ if(isset($options['r'])){
 			
 			if (in_array($md5, $hash) ) {
 				sleep(3);
-				@file_get_contents('https://tg.brigu.net/api/decrypt/' .$str. '/' .$md5 );
+				@file_get_contents('https://tg.brigu.net/api/decrypt_md5/' .$str. '/' .$md5 );
 				sleep(1);
 			}
 			// sleep(1);
@@ -60,7 +60,7 @@ if(isset($options['r'])){
 
 	$hash = file('hash.md5', FILE_IGNORE_NEW_LINES);
 	$repeat = $options['r'];
-	$th = 22;
+	$th = 10;
 	$index = 1;
 
 	function startThread($hash, $repeat) {
